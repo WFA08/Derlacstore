@@ -1,0 +1,10 @@
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+  script:
+    - apt-get update && apt-get install -y sshpass
+    - sshpass -p "$SSH_PASSWORD" rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no -p 22" ./ derlzqbj@192.64.118.31:/home/derlzqbj/public_html
+  only:
+    - main
