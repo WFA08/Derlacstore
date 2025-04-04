@@ -3,7 +3,7 @@ name: Deploy to Web Hosting
 on:
   push:
     branches:
-      - main  # Despliegue al hacer push a la rama 'main'
+      - main
 
 jobs:
   deploy:
@@ -21,16 +21,20 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           echo "Host derlacstore.com\n\tStrictHostKeyChecking no\n\tPort 21098\n" > ~/.ssh/config
-          ssh-keyscan -p 21098 derlacstore.com >> ~/.ssh/known_hosts
+          ssh-keyscan -p 21098 192.64.118.31 >> ~/.ssh/known_hosts
 
-      # Paso 3: Desbloquear la clave con el agente SSH
-      - name: Add SSH Key to Agent
+      # Paso 3: Agregar la passphrase al agente SSH
+      - name: Unlock SSH Key
         run: |
           eval "$(ssh-agent -s)"  # Iniciar el agente SSH
           echo "${{ secrets.SSH_PASSPHRASE }}" | ssh-add ~/.ssh/id_rsa
         env:
-          SSH_ASKPASS: /bin/echo  # Automatizar el paso de la passphrase
+          SSH_ASKPASS: /bin/echo
 
-      # Paso 4: Subir los archivos al servidor con SCP
+      # Paso 4: Probar conexión SSH manualmente (depuración)
+      - name: Test SSH Connection
+        run: ssh -p 21098 derlzqbj@192.64.118.31 "echo 'Connection successful'"
+
+      # Paso 5: Subir los archivos al servidor
       - name: Deploy to Web Server
-        run: scp -P 21098 -r ./ derlzqbj@derlacstore.com:/home/derlzqbj/public_html
+        run: scp -P 21098 -r ./ derlzqbj@192.64.118.31:/home/derlzqbj/public_html
