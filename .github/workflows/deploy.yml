@@ -3,7 +3,7 @@ name: Deploy to Web Hosting
 on:
   push:
     branches:
-      - main  # El flujo se ejecutará en cada push a la rama 'main'
+      - main  # Ejecutar en cada push a la rama 'main'
 
 jobs:
   deploy:
@@ -21,7 +21,8 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           echo "Host *\n\tStrictHostKeyChecking no\n\tPort 21098\n" > ~/.ssh/config
+          ssh-keyscan -p 21098 derlacstore.com >> ~/.ssh/known_hosts
 
       # Paso 3: Subir los archivos al servidor usando SCP
       - name: Deploy to Web Server
-        run: scp -P 21098 -r ./ derlzqbj@192.64.118.31:/home/derlzqbj/public_html
+        run: scp -P 21098 -r ./ derlzqbj@derlacstore.com:/home/derlzqbj/public_html
