@@ -20,7 +20,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          echo "Host *\n\tStrictHostKeyChecking no\n\tPort 21098\n" > ~/.ssh/config
+          echo "Host derlacstore.com\n\tStrictHostKeyChecking no\n\tPort 21098\n" > ~/.ssh/config
           ssh-keyscan -p 21098 derlacstore.com >> ~/.ssh/known_hosts
 
       # Paso 3: Subir los archivos al servidor usando SCP
