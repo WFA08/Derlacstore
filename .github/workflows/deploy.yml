@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Paso 1: Checkout del código
+      # Paso 1: Checkout del código del repositorio
       - name: Checkout code
         uses: actions/checkout@v2
 
@@ -20,6 +20,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PASSPHRASE }}" | ssh-keygen -p -P - -N "" -f ~/.ssh/id_rsa
           echo "Host derlacstore.com\n\tStrictHostKeyChecking no\n\tPort 21098\n" > ~/.ssh/config
           ssh-keyscan -p 21098 derlacstore.com >> ~/.ssh/known_hosts
 
