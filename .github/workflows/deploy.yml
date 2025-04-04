@@ -3,25 +3,25 @@ name: Deploy to Web Hosting
 on:
   push:
     branches:
-      - main  # El flujo se ejecutará cada vez que haya un push en la rama 'main'
+      - main  # El flujo se ejecutará en cada push a la rama 'main'
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Paso 1: Obtén el código del repositorio
+      # Paso 1: Checkout del código del repositorio
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Paso 2: Configura la clave SSH para conectarte al servidor
+      # Paso 2: Configurar la clave SSH
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          echo "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+          echo "Host *\n\tStrictHostKeyChecking no\n\tPort 21098\n" > ~/.ssh/config
 
-      # Paso 3: Usa SCP para subir los archivos al servidor
+      # Paso 3: Subir los archivos al servidor usando SCP
       - name: Deploy to Web Server
-        run: scp -r ./ derlzqbj@192.64.118.31:/home/derlzqbj/public_html
+        run: scp -P 21098 -r ./ derlzqbj@192.64.118.31:/home/derlzqbj/public_html
