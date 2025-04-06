@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Proyecto Alpha",
+    "description": "Un proyecto orientado a la innovación tecnológica.",
+    "image": "./../assets/images/1.png",
+    "link": "http://youtube.com/feringame"
+  },
+  {
+    "name": "Proyecto Beta",
+    "description": "Un proyecto diseñado para mejorar la accesibilidad.",
+    "image": "./assets/images/2.png",
+    "link": "http://youtube.com/pewdiepie"
+  },
+  {
+    "name": "Proyecto Gamma",
+    "description": "Una solución integral para el desarrollo moderno.",
+    "image": "./assets/images/3.png",
+    "link": "http://linkedin.com"
+  },
+  {
+    "name": "Proyecto Delta",
+    "description": "Un sistema avanzado para gestionar datos en tiempo real.",
+    "image": "./../assets/images/4.png",
+    "link": "http://linkedin.com/in/wfa08"
+  },
+  {
+    "name": "Proyecto Epsilon",
+    "description": "Un enfoque creativo para la educación interactiva.",
+    "image": "./../assets/images/5.png",
+    "link": "http://starlink.com"
+  }
+]

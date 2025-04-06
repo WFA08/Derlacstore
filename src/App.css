@@ -55,10 +55,9 @@ ul li {
   background: linear-gradient(to bottom right, rgb(255 255 255 / 70%), rgba(255, 255, 255, 0.6));
   border-top-right-radius: 8px;
   border-bottom-right-radius: 3px;
-          backdrop-filter: blur(5px);
-          transform: 300ms;
+  backdrop-filter: blur(5px);
+  transform: 300ms;
 }
-
 
 .main .top .links-div .link {
   margin-left: 3em;
@@ -102,8 +101,8 @@ ul li {
   transform: translate(-50%, -15%);
   text-align: center;
   display: grid;
-  grid-template-rows: 1fr 1fr;
-  row-gap: 8em;
+  grid-template-rows: auto auto;
+  row-gap: 2rem; /* Espacio entre barra de búsqueda y grilla */
 }
 
 .main .center h1 {
@@ -165,6 +164,40 @@ ul li {
   font-size: 1.5em;
 }
 
+.results-grid {
+  display: flex;
+  justify-content: center;  /* Centra la grilla horizontalmente */
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 1rem;
+  width: calc(100vw - 4rem); /* Ajusta para alinearse con el diseño */
+  margin: 0 auto;  /* Centrado horizontal */
+  flex-wrap: wrap;  /* Permite que los items se ajusten en varias filas */
+}
+
+.grid-item {
+  flex: 0 0 200px; /* Tamaño uniforme para los elementos */
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  scroll-snap-align: start;
+  transition: 300ms ease;
+}
+
+.grid-item:hover {
+  background-color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.results-grid::-webkit-scrollbar {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .main .center .search {
     width: 500px;
@@ -180,7 +213,7 @@ ul li {
 
 @media (max-width: 580px) {
   .main .center .search {
-    width: 100%; /* Usando tus colores y estructura */
+    width: 100%;
   }
   .main .center .links {
     display: none;
