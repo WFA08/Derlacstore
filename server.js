@@ -2,18 +2,22 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
+import dotenv from 'dotenv';
+dotenv.config();
+
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 // Conexión a MongoDB
-mongoose.connect('mongodb://localhost:27017/Db-derlacstore', {
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-.then(() => console.log('Conexión exitosa a MongoDB'))
-.catch((error) => console.error('Error de conexión a MongoDB:', error));
+.then(() => console.log('✅ Conexión exitosa a MongoDB Atlas'))
+.catch((error) => console.error('❌ Error de conexión a MongoDB:', error));
+
 
 // Esquema de datos
 const proyectSchema = new mongoose.Schema({
