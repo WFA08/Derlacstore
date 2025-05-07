@@ -79,24 +79,24 @@ ul li {
 }
 
 /* Ajuste en signup y login-btn */
-.signup li a,
+.Signup-btn,
 .login-btn {
   padding: .35em .85em; /* Espaciado igual */
-  background-color: transparent;
-  border: 1px solid white;
+  border: 1px solid rgba(255, 255, 255, 0.295);
   border-radius: 6px;
   font-size: 1rem; /* Tamaño de fuente uniforme */
   display: inline-block;
   text-align: center; /* Centro visual */
   transition: 300ms;
-  width: 150px; /* Define un ancho consistente */
+  width: 80px; /* Define un ancho consistente */
   height: 40px; /* Define una altura consistente */
 }
 
-.signup li a:hover,
+.Signup-btn:hover,
 .login-btn:hover {
-  background-color: white;
-  color: black;
+
+  background-color: rgba(0, 0, 0, 0.457);
+  color: rgba(255, 255, 255, 0.701);
 }
 
 .main .center {

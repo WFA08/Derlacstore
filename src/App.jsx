@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Login from "./Login"; // Formulario login
+import Register from "./register"; // Formulario
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -11,6 +12,10 @@ function App() {
   const [MostrarLogin, setMostrarLogin] = useState(false);
   const abrirLogin = () => setMostrarLogin(true);
   const cerrarLogin = () => setMostrarLogin(false);
+
+  const [MostrarRegister, setMostrarRegister] = useState(false);
+  const abrirRegister = () => setMostrarRegister(true);
+  const cerrarRegister = () => setMostrarRegister(false);
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
 
@@ -45,20 +50,22 @@ function App() {
               <div className="top">
                 <div className="nav">
                   <i
-                    className={`fa ${menuOpen ? "fa-times" : "fa-bars"} menu-icon`}
+                    className={`fa ${
+                      menuOpen ? "fa-times" : "fa-bars"
+                    } menu-icon`}
                     aria-hidden="true"
                     onClick={toggleMenu}
                   ></i>
                   <div className={`links-div ${menuOpen ? "active" : ""}`}>
                     <ul className="link">
                       <li>
-                        <a href="pages/sobre-mi">Sobre mi</a>
+                        <Link to="pages/sobre-mi">Sobre mi</Link>
                       </li>
                       <li>
-                        <a href="pages/proyectos">Proyectos</a>
+                        <Link to="pages/proyectos">Proyectos</Link>
                       </li>
                       <li>
-                        <a href="pages/investigaciones">Ciencia?</a>
+                        <Link to="pages/investigaciones">Ciencia?</Link>
                       </li>
                       <li>
                         <a href="https://roadmap.sh/full-stack">ROADMAP</a>
@@ -66,10 +73,12 @@ function App() {
                     </ul>
                   </div>
                 </div>
-                <div className="signup">
+                <div className="btnlogin-sign">
                   <ul>
                     <li>
-                      <a href="./pages/Sign-up">Sign up</a>
+                      <button className="Signup-btn" onClick={abrirRegister}>
+                        Register
+                      </button>
                     </li>
                     <li>
                       <button className="login-btn" onClick={abrirLogin}>
@@ -132,8 +141,22 @@ function App() {
               {/* Popup Login */}
               {MostrarLogin && (
                 <div className="modal-overlay" onClick={cerrarLogin}>
-                  <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                  <div
+                    className="modal-content"
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <Login />
+                  </div>
+                </div>
+              )}
+
+              {MostrarRegister && (
+                <div className="modal-overlay" onClick={cerrarRegister}>
+                  <div
+                    className="modal-content"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <Register />
                   </div>
                 </div>
               )}
