@@ -5,7 +5,6 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 dotenv.config();
 
-
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -18,7 +17,6 @@ mongoose.connect(process.env.MONGO_URI, {
 .then(() => console.log('✅ Conexión exitosa a MongoDB Atlas'))
 .catch((error) => console.error('❌ Error de conexión a MongoDB:', error));
 
-
 // Esquema de datos
 const proyectSchema = new mongoose.Schema({
   name: { type: String, index: true },
@@ -26,10 +24,10 @@ const proyectSchema = new mongoose.Schema({
   image: String,
 });
 
-const Proyecto = mongoose.model('Proyecto', proyectSchema);
-
-// Crear índice de texto para búsquedas avanzadas
+// Crear índice de texto para búsquedas avanzadas (antes de definir el modelo)
 proyectSchema.index({ name: "text", description: "text" });
+
+const Proyecto = mongoose.model('Proyecto', proyectSchema);
 
 // Endpoint para obtener todos los proyectos con filtro de búsqueda
 app.get('/buscar', async (req, res) => {

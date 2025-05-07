@@ -23,9 +23,9 @@ function App() {
     if (!query.trim()) return;
     try {
       const respuesta = await fetch(`http://localhost:3000/buscar?q=${query}`);
-      if (!respuesta.ok)
-        throw new Error("Error al obtener los datos del servidor");
+      if (!respuesta.ok) throw new Error("Error al obtener los datos del servidor");
       const data = await respuesta.json();
+      console.log("Proyectos encontrados:", data); // Verificar lo que llega
       setResultados(data);
     } catch (error) {
       console.error("Error al buscar el proyecto:", error);
@@ -50,9 +50,7 @@ function App() {
               <div className="top">
                 <div className="nav">
                   <i
-                    className={`fa ${
-                      menuOpen ? "fa-times" : "fa-bars"
-                    } menu-icon`}
+                    className={`fa ${menuOpen ? "fa-times" : "fa-bars"} menu-icon`}
                     aria-hidden="true"
                     onClick={toggleMenu}
                   ></i>
@@ -134,6 +132,10 @@ function App() {
                         </div>
                       ))}
                     </div>
+                  )}
+
+                  {query.trim() && resultados.length === 0 && (
+                    <p>No se encontraron proyectos con ese nombre.</p>
                   )}
                 </div>
               </section>

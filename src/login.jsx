@@ -51,4 +51,3 @@ function Login() {
 }
 
 export default Login;
-// Aquí puedes agregar estilos CSS para el componente Login 
