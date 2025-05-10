@@ -20,7 +20,7 @@ Instalación
 
 1. Clona este repositorio en tu máquina local:
    
-   git clone https://github.com/WFA08/proyectos.git
+   git clone https://github.com/WFA08/Derlacstore.git
 
 2. Navega a la carpeta del proyecto:
 
