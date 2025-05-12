@@ -19,16 +19,17 @@ function App() {
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
 
-  const buscarProyecto = async () => {
+  const buscarPeliculas = async () => {
     if (!query.trim()) return;
     try {
-      const respuesta = await fetch(`http://localhost:3000/buscar?q=${query}`);
+      const respuesta = await fetch(`http://localhost:3000/movies?q=${query}`); // Filtra por título
       if (!respuesta.ok) throw new Error("Error al obtener los datos del servidor");
+
       const data = await respuesta.json();
-      console.log("Proyectos encontrados:", data); // Verificar lo que llega
-      setResultados(data);
+      console.log("Películas obtenidas:", data);
+      setResultados(data.slice(0, 4)); // Limita los resultados a 4
     } catch (error) {
-      console.error("Error al buscar el proyecto:", error);
+      console.error("Error al buscar películas:", error);
     }
   };
 
@@ -36,8 +37,8 @@ function App() {
     const handleEsc = (e) => {
       if (e.key === "Escape") cerrarLogin();
     };
-    window.addEventListener("keydown", handleEsc);
-    return () => window.removeEventListener("keydown", handleEsc);
+    document.addEventListener("keydown", handleEsc);
+    return () => document.removeEventListener("keydown", handleEsc); // Limpia el evento al desmontar
   }, []);
 
   return (
@@ -56,33 +57,17 @@ function App() {
                   ></i>
                   <div className={`links-div ${menuOpen ? "active" : ""}`}>
                     <ul className="link">
-                      <li>
-                        <Link to="pages/sobre-mi">Sobre mi</Link>
-                      </li>
-                      <li>
-                        <Link to="pages/proyectos">Proyectos</Link>
-                      </li>
-                      <li>
-                        <Link to="pages/investigaciones">Ciencia?</Link>
-                      </li>
-                      <li>
-                        <a href="https://roadmap.sh/full-stack">ROADMAP</a>
-                      </li>
+                      <li><Link to="pages/sobre-mi">Sobre mi</Link></li>
+                      <li><Link to="pages/proyectos">Proyectos</Link></li>
+                      <li><Link to="pages/investigaciones">Ciencia?</Link></li>
+                      <li><a href="https://roadmap.sh/full-stack">ROADMAP</a></li>
                     </ul>
                   </div>
                 </div>
                 <div className="btnlogin-sign">
                   <ul>
-                    <li>
-                      <button className="Signup-btn" onClick={abrirRegister}>
-                        Register
-                      </button>
-                    </li>
-                    <li>
-                      <button className="login-btn" onClick={abrirLogin}>
-                        Login
-                      </button>
-                    </li>
+                    <li><button className="Signup-btn" onClick={abrirRegister}>Register</button></li>
+                    <li><button className="login-btn" onClick={abrirLogin}>Login</button></li>
                   </ul>
                 </div>
               </div>
@@ -97,45 +82,38 @@ function App() {
                     type="text"
                     className="search"
                     name="search"
-                    placeholder="Buscador de Proyectos"
+                    placeholder="Buscador de Películas"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    onKeyDown={(e) => e.key === "Enter" && buscarProyecto()}
+                    onKeyDown={(e) => e.key === "Enter" && buscarPeliculas()}
                   />
-                  <span onClick={buscarProyecto}>
+                  <span onClick={buscarPeliculas}>
                     <i className="fa fa-search" aria-hidden="true"></i>
                   </span>
 
                   {!query.trim() && (
                     <ul className="links">
-                      <li>
-                        <a href="pages/sobre-mi">Sobre mi</a>
-                      </li>
-                      <li>
-                        <a href="pages/proyectos">Proyectos</a>
-                      </li>
-                      <li>
-                        <a href="pages/investigaciones">Ciencia?</a>
-                      </li>
-                      <li>
-                        <a href="https://roadmap.sh/full-stack">ROADMAP</a>
-                      </li>
+                      <li><a href="pages/sobre-mi">Sobre mi</a></li>
+                      <li><a href="pages/proyectos">Proyectos</a></li>
+                      <li><a href="pages/investigaciones">Ciencia?</a></li>
+                      <li><a href="https://roadmap.sh/full-stack">ROADMAP</a></li>
                     </ul>
                   )}
 
                   {query.trim() && resultados.length > 0 && (
                     <div className="results-grid">
-                      {resultados.map((proyecto, index) => (
+                      {resultados.map((movie, index) => (
                         <div className="grid-item" key={index}>
-                          <strong>{proyecto.name}</strong>
-                          <p>{proyecto.description}</p>
+                          <strong>{movie.title}</strong>
+                          <p>Año: {movie.year}</p>
+                          {movie.genres?.length > 0 && <p>Género: {movie.genres.join(", ")}</p>}
                         </div>
                       ))}
                     </div>
                   )}
 
                   {query.trim() && resultados.length === 0 && (
-                    <p>No se encontraron proyectos con ese nombre.</p>
+                    <p>No se encontraron películas con ese nombre.</p>
                   )}
                 </div>
               </section>
@@ -143,10 +121,7 @@ function App() {
               {/* Popup Login */}
               {MostrarLogin && (
                 <div className="modal-overlay" onClick={cerrarLogin}>
-                  <div
-                    className="modal-content"
-                    onClick={(e) => e.stopPropagation()}
-                  >
+                  <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                     <Login />
                   </div>
                 </div>
@@ -154,10 +129,7 @@ function App() {
 
               {MostrarRegister && (
                 <div className="modal-overlay" onClick={cerrarRegister}>
-                  <div
-                    className="modal-content"
-                    onClick={(e) => e.stopPropagation()}
-                  >
+                  <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                     <Register />
                   </div>
                 </div>
@@ -166,21 +138,9 @@ function App() {
               <footer className="bottom">
                 <div className="social">
                   <ul>
-                    <li>
-                      <a href="https://linkedin.com/in/wfa1/">
-                        <i className="fa fa-linkedin"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="https://github.com/WFA08">
-                        <i className="fa fa-github"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="https://instagram.com/fernandoaf11">
-                        <i className="fa fa-instagram"></i>
-                      </a>
-                    </li>
+                    <li><a href="https://linkedin.com/in/wfa1/"><i className="fa fa-linkedin"></i></a></li>
+                    <li><a href="https://github.com/WFA08"><i className="fa fa-github"></i></a></li>
+                    <li><a href="https://instagram.com/fernandoaf11"><i className="fa fa-instagram"></i></a></li>
                   </ul>
                 </div>
                 <a href="mailto:fernandojosearanafigueredo@gmail.com">
@@ -190,8 +150,6 @@ function App() {
             </div>
           }
         />
-
-        {/* RUTA DE LOGIN */}
         <Route path="/login" element={<Login />} />
       </Routes>
     </Router>
